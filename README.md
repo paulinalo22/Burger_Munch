@@ -5,15 +5,17 @@ Node Express Handlebars: Homework 13
 
 * We need a burger.png
 │       └── img
-│           └── burger.png
-* Handlebars -- set up page how you would like it to look
-* Go over Unit 13 activities for examples of what goes into each folder
-* Set up connection to server
-* Set up ORM for requests to database
-* Look up and then set up controllers
-* Set up database and seed
-* Set up burger models
-* link all the pieces together
+│           └── burger.
+  * Wait till Friday to see if Marcie can get you a burger icon
+* Handlebars -- set up page how you would like it to look 
+  * Bkg clolor -- woody brown color, or wood panelling
+  * To devour box forest green, devoured column slate grayish color
+  * make the form box larger? 
+  * pick a great font 
+  * will the button be hidden on devoured through handlebars or through plain ol CSS?
+  * Just use CSS to set it up or bring over some sweet sweet bootstrap or other css friend?
+* Watch Sarahs cat video review
+  * Fix connections accordingly once you have a greater understanding of what the heck you're doing babe
 * Write readme
 * Upload appropriately
 

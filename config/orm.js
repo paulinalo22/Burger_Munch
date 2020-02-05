@@ -1,71 +1,118 @@
-
 // * Import (require) `connection.js` into `orm.js`
-var connection = require("./connection.js");
+var connection = require("../config/connection.js");
 
-// Object Relational Mapper (ORM)
-// The ?? signs are for swapping out table or column names
-// The ? signs are for swapping out other values
-// These help avoid SQL injection
-// https://en.wikipedia.org/wiki/SQL_injection
+// Helper function for SQL syntax.
+function printQuestionMarks(num) {
+  var arr = [];
 
+  for (var i = 0; i < num; i++) {
+    arr.push("?");
+  }
+
+  return arr.toString();
+}
+
+// Helper function to convert object key/value pairs to SQL syntax
 // * In the `orm.js` file, create the methods that will execute the necessary MySQL commands in the controllers. These are the methods you will need to use in order to retrieve and store data in your database.
 //   * `selectAll()`
 //   * `insertOne()`
 //   * `updateOne()`
+function objToSql(ob) {
+  var arr = [];
+  // loop through the keys and push the key/value as a string int arr
+  for (var key in ob) {
+    var value = ob[key];
+    // check to skip hidden properties
+    if (Object.hasOwnProperty.call(ob, key)) {
+      // if string with spaces, add quotations (Lana Del Grey => 'Lana Del Grey')
+      if (typeof value === "string" && value.indexOf(" ") >= 0) {
+        value = "'" + value + "'";
+      }
+      // e.g. {devoured: true} => ["devoured=true"]
+      arr.push(key + "=" + value);
+    }
+  }
+
+  // translate array of strings to a single comma-separated string
+  return arr.toString();
+}
+
+// Object for all our SQL statement functions.
 var orm = {
-  selectAll: function () {
-    var queryString = "SELECT * FROM ??";
-    connection.query(queryString, [tableInput], function (err, res) {
-      if (err) throw err;
-      console.log(res);
+  selectAll: function (tableInput, cb) {
+    var queryString = "SELECT * FROM " + tableInput + ";";
+    connection.query(queryString, function (err, result) {
+      if (err) {
+        throw err;
+      }
+      cb(result);
     });
   },
-  insertOne: function () {
-    var queryString = "";
-    connection.query(, [], function (err, res) {
-      if (err) throw err;
-      console.log(res);
+  insertOne: function (table, cols, vals, cb) {
+    var queryString = "INSERT INTO " + table;
+    queryString += " (";
+    queryString += cols.toString();
+    queryString += ") ";
+    queryString += "VALUES (";
+    queryString += printQuestionMarks(vals.length);
+    queryString += ") ";
+
+    console.log(queryString);
+
+    connection.query(queryString, vals, function (err, result) {
+      if (err) {
+        throw err;
+      }
+
+      cb(result);
     });
   },
-  updateOne: function () {
-    var queryString = "";
-    connection.query(, [], function (err, res) {
-      if (err) throw err;
-      console.log(res);
+
+  // An example of objColVals would be {name: panther, sleepy: true}
+  updateOne: function (table, objColVals, condition, cb) {
+    var queryString = "UPDATE " + table;
+
+    queryString += " SET ";
+    queryString += objToSql(objColVals);
+    queryString += " WHERE ";
+    queryString += condition;
+
+    console.log(queryString);
+
+    connection.query(queryString, function (err, result) {
+      if (err) {
+        throw err;
+      }
+
+      cb(result);
     });
-  });
+  }
 };
-};
 
-// selectWhere: function(tableInput, colToSearch, valOfCol) {
-  //   var queryString = "SELECT * FROM ?? WHERE ?? = ?";
-  //   connection.query(queryString, [tableInput, colToSearch, valOfCol], function(err, result) {
-    //     if (err) throw err;
-    //     console.log(result);
-    //   });
-    // },
-    // selectAndOrder: function(whatToSelect, table, orderCol) {
-      //   var queryString = "SELECT ?? FROM ?? ORDER BY ?? DESC";
-      //   console.log(queryString);
-      //   connection.query(queryString, [whatToSelect, table, orderCol], function(err, result) {
-        //     if (err) throw err;
-        //     console.log(result);
-        //   });
-        // },
-  // findWhoHasMost: function(tableOneCol, tableTwoForeignKey, tableOne, tableTwo) {
-    //   var queryString =
-    //     "SELECT ??, COUNT(??) AS count FROM ?? LEFT JOIN ?? ON ??.??= ??.id GROUP BY ?? ORDER BY count DESC LIMIT 1";
-
-    //   connection.query(
-      //     queryString,
-      //     [tableOneCol, tableOneCol, tableOne, tableTwo, tableTwo, tableTwoForeignKey, tableOne, tableOneCol],
-  //     function(err, result) {
-    //       if (err) throw err;
-    //       console.log(result);
-    //     }
-    //   );
-    // }
-  };
-
-// * Export the ORM object in `module.exports`.
+// Export the orm object for the model (cat.js).
 module.exports = orm;
+
+
+// var orm = {
+//   selectAll: function (tableInput) {
+//     var queryString = "SELECT * FROM ??";
+//     connection.query(queryString, [tableInput], function (err, res) {
+//       if (err) throw err;
+//       console.log(res);
+//     });
+//   },
+//   insertOne: function (tableInput, column, value) {
+//     var queryString = "INSERT INTO ?? (??) VALUES (?)";
+//     connection.query(queryString, [tableInput, column, value], function (err, res) {
+//       if (err) throw err;
+//       console.log(res);
+//     });
+//   },
+//   updateOne: function (tableInput, column, id) {
+//     var queryString = "UPDATE ?? SET ?? = 1 WHERE id = ?";
+//     connection.query(queryString, [tableInput, column, id], function (err, res) {
+//       if (err) throw err;
+//       console.log(res);
+//     });
+//   };
+// };
