@@ -5,8 +5,10 @@
 	{{burger_name}}
 
 	{{!-- should only show button if burger is not devoured --}}
-	<button class="change-devour" data-id="{{id}}">
+	{{#unless devoured}}
+	<button class="change-devour" data-id="{{id}}" data-munch="{{true}}">
 		MUNCH IT!
 		{{!-- don't think we need an else/if because it won't switch back and forth --}}
 	</button>
+	{{/unless}}
 </li>

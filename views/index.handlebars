@@ -6,24 +6,27 @@
 <h1> Let's MUNCH some burgers, y'all! </h1>
 
 <ul>
+  <h2>Eaten </h2>
   {{#each burgers}}
-  {{#unless devoured}}
+  {{#if devoured}}
+  {{!-- > means you're looking in the partials directory --}}
   {{> burgers/burger-block devoured=true}}
-  {{/unless}}
+  {{/if}}
   {{/each}}
 </ul>
 
 <ul>
+  <h2> Not Eaten </h2>
   {{#each burgers}}
-  {{#if devoured}}
+  {{#unless devoured}}
   {{> burgers/burger-block devoured=false}}
-  {{/if}}
+  {{/unless}}
   {{/each}}
 </ul>
 
 <form class="create-form">
   <div class="form-group">
-    <input type="text" id="newBurger" name="name">
+    <input type="text" id="newBurger" name="burger_name">
   </div>
   <button type="submit">Submit</button>
 </form>

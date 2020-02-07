@@ -8,14 +8,15 @@ var burger = {
       cb(res);
     });
   },
-  // The variables cols and vals are arrays.
-  insertOne: function (cols, vals, cb) {
-    orm.insertOne("burgers", cols, vals, function (res) {
+  insertOne: function (column, value, cb) {
+    orm.insertOne("burgers", column, value, function (res) {
       cb(res);
     });
   },
-  updateOne: function (objColVals, condition, cb) {
-    orm.updateOne("burgers", objColVals, condition, function (res) {
+  //needs to be passing id of burger that needs to be changed
+  //tableInput = burgers, column=devoured, id = ?? grab it from id of button
+  updateOne: function (burgerId, cb) {
+    orm.updateOne("burgers", "devoured", burgerId, function (res) {
       cb(res);
     });
   }
