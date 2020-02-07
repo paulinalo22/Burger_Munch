@@ -1,0 +1,22 @@
+html, body {
+  background-color: burlywood;
+  color: antiquewhite;
+}
+
+img {
+  border-radius: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+
+}
+
+#eaten {
+  background-color:darkolivegreen;
+}
+
+#btn {
+  background-color: darkolivegreen;
+  color: antiquewhite;
+}

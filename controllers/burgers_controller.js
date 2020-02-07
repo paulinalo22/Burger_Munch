@@ -23,7 +23,7 @@ router.post("/api/burgers", function (req, res) {
   });
 });
 
-router.put("/api/burger/:id", function (req, res) {
+router.put("/api/burgers/:id", function (req, res) {
   //creates id = id
   var burgerId = req.params.id;
 

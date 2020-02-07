@@ -26,6 +26,7 @@ var orm = {
   updateOne: function (tableInput, column, burgerId, cb) {
     var queryString = "UPDATE ?? SET ?? = 1 WHERE id = ?";
     connection.query(queryString, [tableInput, column, burgerId], function (err, res) {
+      console.log("update" + queryString);
       if (err) throw err;
       console.log(res);
       cb(res);
