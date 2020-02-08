@@ -7,6 +7,6 @@ In this assignment I create a burger logger with MySQL, Node, Express, Handlebar
 
 ## Links
 
-[Deployed Site]()
+[Deployed Site](https://blooming-eyrie-50875.herokuapp.com/)
 
-[Link to Updated Portfolio]()
+[Link to Updated Portfolio](https://missjody.github.io/UpdatedPortfolio/)
